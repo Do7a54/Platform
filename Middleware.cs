@@ -10,8 +10,6 @@ namespace Platform
             // do nothing
         }   // Page 310
 
-        //private RequestDelegate next;   // Constructor   // Modified Page 310 
-
         public QueryStringMiddleWare(RequestDelegate nextDelegate)
         {
             next = nextDelegate;
