@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Mamdouh\\ASP .Net\\Pro ASP .NET Core 6\\My Training\\ch 12\\Platform\\Platform.csproj": {}
+    "E:\\Mamdouh\\GitHub\\Platform\\Platform.csproj": {}
   },
   "projects": {
-    "E:\\Mamdouh\\ASP .Net\\Pro ASP .NET Core 6\\My Training\\ch 12\\Platform\\Platform.csproj": {
+    "E:\\Mamdouh\\GitHub\\Platform\\Platform.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Mamdouh\\ASP .Net\\Pro ASP .NET Core 6\\My Training\\ch 12\\Platform\\Platform.csproj",
+        "projectUniqueName": "E:\\Mamdouh\\GitHub\\Platform\\Platform.csproj",
         "projectName": "Platform",
-        "projectPath": "E:\\Mamdouh\\ASP .Net\\Pro ASP .NET Core 6\\My Training\\ch 12\\Platform\\Platform.csproj",
+        "projectPath": "E:\\Mamdouh\\GitHub\\Platform\\Platform.csproj",
         "packagesPath": "C:\\Users\\EW\\.nuget\\packages\\",
-        "outputPath": "E:\\Mamdouh\\ASP .Net\\Pro ASP .NET Core 6\\My Training\\ch 12\\Platform\\obj\\",
+        "outputPath": "E:\\Mamdouh\\GitHub\\Platform\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -45,6 +45,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
