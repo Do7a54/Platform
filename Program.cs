@@ -1,33 +1,36 @@
 using Platform;
+using Platform.Services;
+
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.Configure<RouteOptions>(opts => {
-    opts.ConstraintMap.Add("countryName",
-    typeof(CountryRouteConstraint));
-});
+
+builder.Services.AddSingleton<IResponseFormatter, HtmlResponseFormatter>(); // Using DI P 362
 var app = builder.Build();
-app.Use(async (context, next) => {
-    Endpoint? end = context.GetEndpoint();
-    if (end != null)
-    {
-        await context.Response
-        .WriteAsync($"{end.DisplayName} Selected \n");
-    }
-    else
-    {
-        await context.Response.WriteAsync("No Endpoint Selected \n");
-    }
-    await next();
-});
-app.Map("{number:int}", async context => {
-    await context.Response.WriteAsync("Routed to the int endpoint");
-}).WithDisplayName("Int Endpoint")
-.Add(b => ((RouteEndpointBuilder)b).Order = 1);
-app.Map("{number:double}", async context => {
-    await context.Response
-    .WriteAsync("Routed to the double endpoint");
-}).WithDisplayName("Double Endpoint")
-.Add(b => ((RouteEndpointBuilder)b).Order = 2);
-app.MapFallback(async context => {
-    await context.Response.WriteAsync("Routed to fallback endpoint");
-});
+
+app.UseMiddleware<WeatherMiddleware>();
+
+app.MapGet("middleware/function", async (HttpContext context,
+IResponseFormatter formatter) => {
+    await formatter.Format(context, "Middleware Function: It is snowing in Chicago");
+});  //Added Using DI P 362
+
+//IResponseFormatter formatter = new TextResponseFormatter();
+/*app.MapGet("middleware/function", async (context) => {
+    // await formatter.Format(context, "Middleware Function: It is snowing in Chicago");
+
+    // await TextResponseFormatter.Singleton.Format(context, "Middleware Function: It is snowing in Chicago");  // P 359
+    await TypeBroker.Formatter.Format(context,"Middleware Function: It is snowing in Chicago"); // P 360
+});*/ //  ---- Using DI P 362
+
+app.MapGet("endpoint/class", WeatherEndpoint.Endpoint);
+
+app.MapGet("endpoint/function", async (HttpContext context,
+IResponseFormatter formatter) => {
+    await formatter.Format(context, "Endpoint Function: It is sunny in LA");
+});   //Added Using DI P 362
+
+/*app.MapGet("endpoint/function", async context => {
+    //await context.Response.WriteAsync("Endpoint Function: It is sunny in LA"); 
+    // await TextResponseFormatter.Singleton.Format(context,"Endpoint Function: It is sunny in LA"); // P 359
+    await TypeBroker.Formatter.Format(context,"Endpoint Function: It is sunny in LA");    // P 360
+});*/ //  ---- Using DI P 362
 app.Run();
