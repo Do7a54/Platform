@@ -21,7 +21,9 @@ IResponseFormatter formatter) => {
     await TypeBroker.Formatter.Format(context,"Middleware Function: It is snowing in Chicago"); // P 360
 });*/ //  ---- Using DI P 362
 
-app.MapGet("endpoint/class", WeatherEndpoint.Endpoint);
+//app.MapGet("endpoint/class", WeatherEndpoint.Endpoint);
+//app.MapWeather("endpoint/class");  // Page 367
+app.MapEndpoint<WeatherEndpoint>("endpoint/class");  // Page 369
 
 app.MapGet("endpoint/function", async (HttpContext context,
 IResponseFormatter formatter) => {
